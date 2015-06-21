@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Solution xmlns="http://schemas.microsoft.com/sharepoint/" SolutionId="aae590db-5791-404d-8e2d-4b11bec5a29d" SharePointProductVersion="15.0">
+  <Assemblies>
+    <Assembly Location="DocumentReadStatus.dll" DeploymentTarget="GlobalAssemblyCache" />
+  </Assemblies>
+  <FeatureManifests>
+    <FeatureManifest Location="DocumentReadStatus_Feature1\Feature.xml" />
+  </FeatureManifests>
+</Solution>
