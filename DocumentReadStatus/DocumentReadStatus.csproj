@@ -42,27 +42,51 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.SharePoint" />
     <Reference Include="Microsoft.SharePoint.Client.ServerRuntime" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Features\Feature1\Feature1.EventReceiver.cs">
-      <DependentUpon>Feature1.feature</DependentUpon>
+    <Compile Include="DocStatusWebPart\DocStatusWebPart.ascx.cs">
+      <DependentUpon>DocStatusWebPart.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="DocStatusWebPart\DocStatusWebPart.ascx.g.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DocStatusWebPart.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Features\AuditListWebPart\AuditListWebPart.EventReceiver.cs">
+      <DependentUpon>AuditListWebPart.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\AuditModule\AuditModule.EventReceiver.cs">
+      <DependentUpon>AuditModule.feature</DependentUpon>
     </Compile>
     <Compile Include="HttpModule\DocumentAuditData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Features\Feature1\Feature1.feature">
+    <None Include="DocStatusWebPart\DocStatusWebPart.webpart" />
+    <None Include="DocStatusWebPart\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{93a53b95-146a-47d0-813b-4990b8f60542}</SharePointProjectItemId>
+    </None>
+    <None Include="Features\AuditModule\AuditModule.feature">
       <FeatureId>{c965c49a-e725-409e-bfec-0382d7c50d23}</FeatureId>
     </None>
+    <None Include="Features\AuditListWebPart\AuditListWebPart.feature">
+      <FeatureId>{a4cebde4-c290-4801-9d01-d35e30dcae9e}</FeatureId>
+    </None>
     <None Include="key.snk" />
+    <None Include="Layouts\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{e6fb3c1a-5e34-40bf-9252-ce934d09ca32}</SharePointProjectItemId>
+    </None>
     <None Include="Package\Package.package">
       <PackageId>{aae590db-5791-404d-8e2d-4b11bec5a29d}</PackageId>
     </None>
@@ -72,9 +96,18 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Features\Feature1\Feature1.Template.xml">
-      <DependentUpon>Feature1.feature</DependentUpon>
+    <Content Include="DocStatusWebPart\DocStatusWebPart.ascx">
+      <Generator>SharePointWebPartCodeGenerator</Generator>
+      <LastGenOutput>DocStatusWebPart.ascx.g.cs</LastGenOutput>
     </Content>
+    <Content Include="DocStatusWebPart\Elements.xml" />
+    <Content Include="Features\AuditModule\AuditModule.Template.xml">
+      <DependentUpon>AuditModule.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\AuditListWebPart\AuditListWebPart.Template.xml">
+      <DependentUpon>AuditListWebPart.feature</DependentUpon>
+    </Content>
+    <Content Include="Layouts\DocumentReadStatus\jquery-1.11.3.min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -2,5 +2,9 @@
 <package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="aae590db-5791-404d-8e2d-4b11bec5a29d" solutionId="aae590db-5791-404d-8e2d-4b11bec5a29d" resetWebServer="false" sharePointProductVersion="15.0" name="DocumentReadStatus" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
   <features>
     <featureReference itemId="c965c49a-e725-409e-bfec-0382d7c50d23" />
+    <featureReference itemId="a4cebde4-c290-4801-9d01-d35e30dcae9e" />
   </features>
+  <projectItems>
+    <projectItemReference itemId="e6fb3c1a-5e34-40bf-9252-ce934d09ca32" />
+  </projectItems>
 </package>

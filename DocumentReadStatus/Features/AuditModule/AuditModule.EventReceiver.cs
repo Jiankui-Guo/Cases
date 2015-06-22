@@ -26,10 +26,10 @@ namespace DocumentReadStatus.Features.Feature1
             if (webApp != null)
             {
                 SPWebConfigModification modification = new SPWebConfigModification(
-                    "add[@name='DocumentAuditDataModule']", "configuration/system.webServer/modules");
+                    "add[@name='DocumentReadStatusModule']", "configuration/system.webServer/modules");
                 modification.Sequence = 0;
                 modification.Type = SPWebConfigModification.SPWebConfigModificationType.EnsureChildNode;
-                modification.Value = string.Format(@"<add name=""DocumentAuditDataModule"" type=""DocumentReadStatus.HttpModule.DocumentAuditDataModule, {0}"" />",
+                modification.Value = string.Format(@"<add name=""DocumentReadStatusModule"" type=""DocumentReadStatus.HttpModule.DocumentReadStatusModule, {0}"" />",
                     Assembly.GetExecutingAssembly().FullName);
 
                 webApp.WebConfigModifications.Add(modification);

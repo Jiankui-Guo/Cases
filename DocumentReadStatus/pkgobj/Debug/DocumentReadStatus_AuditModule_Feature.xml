@@ -1,0 +1,2 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Feature xmlns="http://schemas.microsoft.com/sharepoint/" Title="Enable Http Module for Document View Audit Log" ActivateOnDefault="FALSE" Description="Enable Http Module for Document View Audit Log, Sample Code" Id="6a5e8124-c09a-43b2-accd-d45db4a24886" ReceiverAssembly="DocumentReadStatus, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45b61b8803d5340e" ReceiverClass="DocumentReadStatus.Features.Feature1.Feature1EventReceiver" Scope="WebApplication"></Feature>

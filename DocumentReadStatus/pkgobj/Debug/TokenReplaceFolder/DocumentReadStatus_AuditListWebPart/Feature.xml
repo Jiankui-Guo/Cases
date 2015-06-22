@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Feature xmlns="http://schemas.microsoft.com/sharepoint/" Title="DocumentReadStatus List and Web Part" ActivateOnDefault="FALSE" Description="DocumentReadStatus List and Web Part to support showing document read status" Id="4d0b2843-1ba3-4450-87c0-587c8504ed36" ReceiverAssembly="DocumentReadStatus, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45b61b8803d5340e" ReceiverClass="DocumentReadStatus.Features.AuditListWebPart.AuditListWebPartEventReceiver" Scope="Site">
+  <ElementManifests>
+    <ElementManifest Location="DocStatusWebPart\Elements.xml" />
+    <ElementFile Location="DocStatusWebPart\DocStatusWebPart.webpart" />
+  </ElementManifests>
+</Feature>
