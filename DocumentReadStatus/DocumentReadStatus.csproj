@@ -55,6 +55,7 @@
     <Reference Include="Microsoft.SharePoint.Client.ServerRuntime" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DocReadStatusHandler\DocDeleteHandler.cs" />
     <Compile Include="DocStatusWebPart\DocStatusWebPart.ascx.cs">
       <DependentUpon>DocStatusWebPart.ascx</DependentUpon>
     </Compile>
@@ -73,6 +74,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DocReadStatusHandler\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{dcf8ceb1-f56d-426c-b7ba-0da35ad0de72}</SharePointProjectItemId>
+    </None>
     <None Include="DocStatusWebPart\DocStatusWebPart.webpart" />
     <None Include="DocStatusWebPart\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{93a53b95-146a-47d0-813b-4990b8f60542}</SharePointProjectItemId>
@@ -96,6 +100,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="DocReadStatusHandler\Elements.xml" />
     <Content Include="DocStatusWebPart\DocStatusWebPart.ascx">
       <Generator>SharePointWebPartCodeGenerator</Generator>
       <LastGenOutput>DocStatusWebPart.ascx.g.cs</LastGenOutput>
