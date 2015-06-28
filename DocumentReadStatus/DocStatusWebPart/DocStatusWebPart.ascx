@@ -63,7 +63,7 @@ function onQueryUserSucceeded(sender, args) {
 }
  
 function onQueryUserFailed(sender, args) {
-    alert('Request failed' + args.get_message() + '\n' + arg.get_stackTrace());
+    alert('Request failed' + args.get_message() + '\n' + args.get_stackTrace());
 }
  
 function getWebUserData() {

@@ -3,5 +3,6 @@
   <ElementManifests>
     <ElementManifest Location="DocStatusWebPart\Elements.xml" />
     <ElementFile Location="DocStatusWebPart\DocStatusWebPart.webpart" />
+    <ElementManifest Location="DocReadStatusHandler\Elements.xml" />
   </ElementManifests>
 </Feature>

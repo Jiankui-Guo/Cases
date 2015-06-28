@@ -4,14 +4,14 @@
       <Receiver>
         <Name>DocDeleteHandlerItemUpdated</Name>
         <Type>ItemUpdated</Type>
-        <Assembly>$SharePoint.Project.AssemblyFullName$</Assembly>
+        <Assembly>DocumentReadStatus, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45b61b8803d5340e</Assembly>
         <Class>DocumentReadStatus.EventReceiver.DocReadStatusHandler</Class>
         <SequenceNumber>10000</SequenceNumber>
       </Receiver>
       <Receiver>
         <Name>DocDeleteHandlerItemDeleted</Name>
         <Type>ItemDeleted</Type>
-        <Assembly>$SharePoint.Project.AssemblyFullName$</Assembly>
+        <Assembly>DocumentReadStatus, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45b61b8803d5340e</Assembly>
         <Class>DocumentReadStatus.EventReceiver.DocReadStatusHandler</Class>
         <SequenceNumber>10000</SequenceNumber>
       </Receiver>

@@ -4,7 +4,7 @@ using Microsoft.SharePoint;
 using Microsoft.SharePoint.Utilities;
 using Microsoft.SharePoint.Workflow;
 
-namespace DocumentReadStatus.DocReadStatusHandler
+namespace DocumentReadStatus.EventReceiver
 {
     /// <summary>
     /// List Item Events
@@ -20,7 +20,7 @@ namespace DocumentReadStatus.DocReadStatusHandler
 
             CleanUpDocReadStatus(properties.SiteId,
                 properties.Web.ID,
-                properties.ListItem.Url);
+                properties.BeforeUrl);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace DocumentReadStatus.DocReadStatusHandler
 
             CleanUpDocReadStatus(properties.SiteId,
                 properties.Web.ID,
-                properties.ListItem.Url);
+                properties.BeforeUrl);
         }
 
         private void CleanUpDocReadStatus(Guid siteId, Guid webId, string itemUrl)

@@ -83,13 +83,13 @@ namespace DocumentReadStatus.DocStatusWebPart {
                         "iew>\";\r\n \r\n    camlQuery.set_viewXml(strCaml);\r\n    collListItem = list.getItems" +
                         "(camlQuery);\r\n    clientContext.load(collListItem);\r\n    clientContext.executeQu" +
                         "eryAsync(onQuerySucceeded, onQueryFailed);\r\n}\r\n \r\nfunction onQueryUserFailed(sen" +
-                        "der, args) {\r\n    alert(\'Request failed\' + args.get_message() + \'\\n\' + arg.get_s" +
-                        "tackTrace());\r\n}\r\n \r\nfunction getWebUserData() {\r\n    clientContext = SP.ClientC" +
-                        "ontext.get_current();\r\n    web = clientContext.get_web();\r\n    user = web.get_cu" +
-                        "rrentUser();\r\n    user.retrieve();\r\n    clientContext.load(web);\r\n    clientCont" +
-                        "ext.executeQueryAsync(onQueryUserSucceeded, onQueryUserFailed);\r\n}\r\n \r\n$(documen" +
-                        "t).ready(function () {\r\n    //alert(\'start\');\r\n    ExecuteOrDelayUntilScriptLoad" +
-                        "ed(getWebUserData, \"sp.js\");\r\n});\r\n"));
+                        "der, args) {\r\n    alert(\'Request failed\' + args.get_message() + \'\\n\' + args.get_" +
+                        "stackTrace());\r\n}\r\n \r\nfunction getWebUserData() {\r\n    clientContext = SP.Client" +
+                        "Context.get_current();\r\n    web = clientContext.get_web();\r\n    user = web.get_c" +
+                        "urrentUser();\r\n    user.retrieve();\r\n    clientContext.load(web);\r\n    clientCon" +
+                        "text.executeQueryAsync(onQueryUserSucceeded, onQueryUserFailed);\r\n}\r\n \r\n$(docume" +
+                        "nt).ready(function () {\r\n    //alert(\'start\');\r\n    ExecuteOrDelayUntilScriptLoa" +
+                        "ded(getWebUserData, \"sp.js\");\r\n});\r\n"));
             return @__ctrl;
         }
         
