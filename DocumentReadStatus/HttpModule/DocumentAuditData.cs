@@ -25,9 +25,15 @@ namespace DocumentReadStatus.HttpModule
         private void WriteDocStatus(object sender, EventArgs e)
         {
             try
-            {
-
+            {   
                 string itemURL = HttpUtility.UrlDecode(HttpContext.Current.Request.RawUrl);
+
+                //OWA: http://jg-pc-wfe01/_layouts/15/WopiFrame.aspx?sourcedoc=/Shared%20Documents/OWA.docx&action=default
+                if (itemURL.Contains("WopiFrame.aspx"))
+                {
+                    itemURL = HttpUtility.UrlDecode(HttpContext.Current.Request.QueryString["sourcedoc"]);
+                }
+
                 Guid listId = Guid.Empty;
                 Guid itemId = Guid.Empty;
 
