@@ -34,6 +34,10 @@ namespace DocumentReadStatus.HttpModule
                     itemURL = HttpUtility.UrlDecode(HttpContext.Current.Request.QueryString["sourcedoc"]);
                 }
 
+                Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
+                    "Executing WriteDocStatus",
+                    itemURL);
+
                 Guid listId = Guid.Empty;
                 Guid itemId = Guid.Empty;
 
@@ -57,6 +61,10 @@ namespace DocumentReadStatus.HttpModule
                         }
                     }
                 });
+
+                Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
+                    "Executing WriteDocStatus",
+                    result.Rows.Count);
 
                 if (result.Rows.Count == 0)
                 {
@@ -90,7 +98,13 @@ namespace DocumentReadStatus.HttpModule
                 SPListItem doc = null;
 
                 if (list.BaseType != SPBaseType.DocumentLibrary)
+                {
+                    Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
+                        "Executing WriteDocStatus",
+                        list.Title,
+                        list.BaseType.ToString());
                     return;
+                }
 
                 try
                 {
@@ -142,6 +156,10 @@ namespace DocumentReadStatus.HttpModule
                                     item["Title"] = itemURL;
                                     item["ViewPeople"] = ";" + userId + ";";
                                     item.Update();
+
+                                    Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
+                                        "Executing WriteDocStatus: Add new status log",
+                                        userId);
                                 }
                                 //ITEM COUNT SHOULD BE EQUEAL TO 1
                                 else
@@ -149,6 +167,11 @@ namespace DocumentReadStatus.HttpModule
                                     string peopleIds = items[0]["ViewPeople"].ToString() + ";";
                                     if (!peopleIds.Contains(";" + userId + ";"))
                                         items[0]["ViewPeople"] = peopleIds + userId + ";";
+                                    items[0].Update();
+
+                                    Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
+                                        "Executing WriteDocStatus: Update exsiting status log",
+                                        userId);
                                 }
 
                                 web.AllowUnsafeUpdates = false;
@@ -164,14 +187,9 @@ namespace DocumentReadStatus.HttpModule
             }
             catch(Exception ex)
             {
-                Microsoft.SharePoint.Administration.SPDiagnosticsService.Local.WriteTrace(
-                    0,
-                    new Microsoft.SharePoint.Administration.SPDiagnosticsCategory("Document Read Status",
-                        Microsoft.SharePoint.Administration.TraceSeverity.High,
-                        Microsoft.SharePoint.Administration.EventSeverity.Information),
-                        Microsoft.SharePoint.Administration.TraceSeverity.High,
-                        ex.Message,
-                        ex.StackTrace);
+                Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.High,
+                    ex.Message,
+                    ex.StackTrace);
             }
         }
 

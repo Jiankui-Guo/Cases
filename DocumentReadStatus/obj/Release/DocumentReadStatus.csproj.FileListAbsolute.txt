@@ -1,0 +1,4 @@
+C:\Users\farmadmin\Documents\GitHub\Cases\DocumentReadStatus\bin\Release\DocumentReadStatus.dll
+C:\Users\farmadmin\Documents\GitHub\Cases\DocumentReadStatus\bin\Release\DocumentReadStatus.pdb
+C:\Users\farmadmin\Documents\GitHub\Cases\DocumentReadStatus\obj\Release\DocumentReadStatus.dll
+C:\Users\farmadmin\Documents\GitHub\Cases\DocumentReadStatus\obj\Release\DocumentReadStatus.pdb

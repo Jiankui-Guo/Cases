@@ -35,6 +35,10 @@ namespace DocumentReadStatus.Features.AuditListWebPart
                 readStatusList.Hidden = true;
                 readStatusList.OnQuickLaunch = false;
                 readStatusList.Update();
+
+                Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
+                    "Executing AuditListWebPartEventReceiver FeatureActivated",
+                    string.Format("Creating list for web:{0}", web.Url));
             }
         }
 
@@ -50,7 +54,13 @@ namespace DocumentReadStatus.Features.AuditListWebPart
                 SPList list = web.Lists.TryGetList("DocReadStatus");
 
                 if (list != null)
+                {
                     web.Lists.Delete(list.ID);
+
+                    Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
+                        "Executing AuditListWebPartEventReceiver FeatureDeactivating",
+                        string.Format("Removing list for web:{0}", web.Url));
+                }
             }
                 
         }

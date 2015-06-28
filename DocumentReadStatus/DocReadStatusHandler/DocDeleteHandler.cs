@@ -18,6 +18,10 @@ namespace DocumentReadStatus.EventReceiver
         {
             base.ItemUpdated(properties);
 
+            Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
+                "Executing ItemUpdated",
+                properties.BeforeUrl);
+
             CleanUpDocReadStatus(properties.SiteId,
                 properties.Web.ID,
                 properties.BeforeUrl);
@@ -29,6 +33,10 @@ namespace DocumentReadStatus.EventReceiver
         public override void ItemDeleted(SPItemEventProperties properties)
         {
             base.ItemDeleted(properties);
+
+            Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
+                "Executing ItemDeleted",
+                properties.BeforeUrl);
 
             CleanUpDocReadStatus(properties.SiteId,
                 properties.Web.ID,
@@ -70,6 +78,9 @@ namespace DocumentReadStatus.EventReceiver
                             foreach (SPListItem item in items)
                             {
                                 readStatusList.Items.DeleteItemById(item.ID);
+                                Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
+                                    "Executing CleanUpDocReadStatus",
+                                    item.Title);
                             }
 
                             web.AllowUnsafeUpdates = false;

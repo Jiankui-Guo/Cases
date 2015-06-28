@@ -71,6 +71,7 @@
       <DependentUpon>AuditModule.feature</DependentUpon>
     </Compile>
     <Compile Include="HttpModule\DocumentAuditData.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
