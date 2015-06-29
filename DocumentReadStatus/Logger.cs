@@ -9,7 +9,7 @@ namespace DocumentReadStatus
 {
     public static class Logger
     {
-        public static void WriteLog(TraceSeverity ts, string message, params object[] paras)
+        public static void WriteLog(TraceSeverity ts, string message, params object[] data)
         {
             SPDiagnosticsService.Local.WriteTrace(
                    0,
@@ -18,7 +18,12 @@ namespace DocumentReadStatus
                        EventSeverity.Information),
                        ts,
                        message,
-                       paras);
+                       data);
+        }
+
+        public static void WriteVerboseLog(string message, params object[] data)
+        {
+            WriteLog(TraceSeverity.High, message, data);
         }
     }
 }

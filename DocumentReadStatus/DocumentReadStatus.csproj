@@ -101,7 +101,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="DocReadStatusHandler\Elements.xml" />
+    <Content Include="DocReadStatusHandler\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="DocStatusWebPart\DocStatusWebPart.ascx">
       <Generator>SharePointWebPartCodeGenerator</Generator>
       <LastGenOutput>DocStatusWebPart.ascx.g.cs</LastGenOutput>

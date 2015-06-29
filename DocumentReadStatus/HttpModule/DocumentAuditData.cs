@@ -25,7 +25,9 @@ namespace DocumentReadStatus.HttpModule
         private void WriteDocStatus(object sender, EventArgs e)
         {
             try
-            {   
+            {
+                Logger.WriteVerboseLog("Executing WriteDocStatus|RawUrl:{0}", HttpContext.Current.Request.RawUrl);
+
                 string itemURL = HttpUtility.UrlDecode(HttpContext.Current.Request.RawUrl);
 
                 //OWA: http://jg-pc-wfe01/_layouts/15/WopiFrame.aspx?sourcedoc=/Shared%20Documents/OWA.docx&action=default
@@ -34,15 +36,16 @@ namespace DocumentReadStatus.HttpModule
                     itemURL = HttpUtility.UrlDecode(HttpContext.Current.Request.QueryString["sourcedoc"]);
                 }
 
-                Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
-                    "Executing WriteDocStatus",
-                    itemURL);
+                Logger.WriteVerboseLog("Executing WriteDocStatus|ItemUrl:{0}", itemURL);
 
                 Guid listId = Guid.Empty;
                 Guid itemId = Guid.Empty;
 
                 if (SPContext.Current.Web == null)
+                {
+                    Logger.WriteVerboseLog("Executing WriteDocStatus|SPContext.Current.Web == Null");
                     return;
+                }
 
                 DataTable result = new DataTable();
 
@@ -51,20 +54,19 @@ namespace DocumentReadStatus.HttpModule
                     using (SqlConnection conn = new SqlConnection(SPContext.Current.Web.Site.ContentDatabase.DatabaseConnectionString))
                     {
                         string cmdString =
-                            string.Format("SELECT Id,ListId,DirName,LeafName FROM AllDocs WITH(NOLOCK) WHERE LeafName='{0}'",
+                            string.Format("SELECT Id,ListId,DirName,LeafName FROM AllDocs WITH(NOLOCK) WHERE LeafName=N'{0}'",
                             itemURL.Substring(itemURL.LastIndexOf('/') + 1));
                         using (SqlCommand comm = new SqlCommand(cmdString, conn))
                         {
                             conn.Open();
                             SqlDataAdapter sqlAdapter = new SqlDataAdapter(comm);
                             sqlAdapter.Fill(result);
+                            Logger.WriteVerboseLog("Executing WriteDocStatus|Executing SQL:{0}", cmdString);
                         }
                     }
                 });
 
-                Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
-                    "Executing WriteDocStatus",
-                    result.Rows.Count);
+                Logger.WriteVerboseLog("Executing WriteDocStatus|Sql Result Cout:{0}", result.Rows.Count);
 
                 if (result.Rows.Count == 0)
                 {
@@ -90,6 +92,8 @@ namespace DocumentReadStatus.HttpModule
                     }
                 }
 
+                Logger.WriteVerboseLog("Executing WriteDocStatus|ListId:{0}\tItemId:{1}", listId, itemId);
+
                 //For application pages such as /_layouts/15/addanapp.aspx
                 if (listId == Guid.Empty || itemId == Guid.Empty)
                     return;
@@ -97,12 +101,10 @@ namespace DocumentReadStatus.HttpModule
                 SPList list = SPContext.Current.Web.Lists.GetList(listId, true);
                 SPListItem doc = null;
 
+                Logger.WriteVerboseLog("Executing WriteDocStatus|Get List:{0}, BaseType:{1}", list.Title, list.BaseType);
+
                 if (list.BaseType != SPBaseType.DocumentLibrary)
                 {
-                    Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
-                        "Executing WriteDocStatus",
-                        list.Title,
-                        list.BaseType.ToString());
                     return;
                 }
 
@@ -114,6 +116,8 @@ namespace DocumentReadStatus.HttpModule
                 {
                     //Ingore allitems.aspx and so on
                 }
+
+                Logger.WriteVerboseLog("Executing WriteDocStatus|Get Document:{0}", doc == null ? "null" : doc.Title);
 
                 if (doc != null)
                 {
@@ -131,6 +135,7 @@ namespace DocumentReadStatus.HttpModule
 
                                 if (readStatusList == null)
                                 {
+                                    Logger.WriteVerboseLog("Executing WriteDocStatus|Get List DocReadStatus:null");
                                     return;
                                 }
 
@@ -146,6 +151,8 @@ namespace DocumentReadStatus.HttpModule
 
                                 SPListItemCollection items = readStatusList.GetItems(query);
 
+                                Logger.WriteVerboseLog("Executing WriteDocStatus|Get List items from status list: Count:{0}", items.Count);
+
                                 site.AllowUnsafeUpdates = true;
                                 web.AllowUnsafeUpdates = true;
 
@@ -157,9 +164,7 @@ namespace DocumentReadStatus.HttpModule
                                     item["ViewPeople"] = ";" + userId + ";";
                                     item.Update();
 
-                                    Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
-                                        "Executing WriteDocStatus: Add new status log",
-                                        userId);
+                                    Logger.WriteVerboseLog("Executing WriteDocStatus|Insert status into list: Title:{0}\tViewPeople:{1}", itemURL, userId);
                                 }
                                 //ITEM COUNT SHOULD BE EQUEAL TO 1
                                 else
@@ -169,9 +174,7 @@ namespace DocumentReadStatus.HttpModule
                                         items[0]["ViewPeople"] = peopleIds + userId + ";";
                                     items[0].Update();
 
-                                    Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
-                                        "Executing WriteDocStatus: Update exsiting status log",
-                                        userId);
+                                    Logger.WriteVerboseLog("Executing WriteDocStatus|update status into list: Title:{0}\tViewPeople:{1}", itemURL, userId);
                                 }
 
                                 web.AllowUnsafeUpdates = false;

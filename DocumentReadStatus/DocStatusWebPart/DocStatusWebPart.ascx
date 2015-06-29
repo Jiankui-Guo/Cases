@@ -27,7 +27,13 @@ function onQuerySucceeded(sender, args)
     }
   
     var rows = $('tr[class*="ms-itmhover"] td[class*="ms-vb-title"]');
+    //to be used to detect if it is a folder
+    //var icons = $('tr[class*="ms-itmhover"] td[class*="ms-vb-icon"]');
     rows.each(function () {
+       if(this.innerHTML.toLowerCase().indexOf("handlefolder") >=0) {
+            return;
+        }
+
         var bViewed = false;
         for (var i = 0; i < items.length; i++) {
             var title = items[i];

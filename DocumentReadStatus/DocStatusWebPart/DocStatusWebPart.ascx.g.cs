@@ -67,29 +67,32 @@ namespace DocumentReadStatus.DocStatusWebPart {
                         "r.moveNext())\r\n    {\r\n        var oListItem = listItemEnumerator.get_current();\r" +
                         "\n        var item = oListItem.get_item(\'Title\');\r\n        items.push(item);\r\n   " +
                         "     //alert(item);\r\n    }\r\n  \r\n    var rows = $(\'tr[class*=\"ms-itmhover\"] td[cl" +
-                        "ass*=\"ms-vb-title\"]\');\r\n    rows.each(function () {\r\n        var bViewed = false" +
-                        ";\r\n        for (var i = 0; i < items.length; i++) {\r\n            var title = ite" +
-                        "ms[i];\r\n            if (this.innerHTML.toLowerCase().indexOf(title.toLowerCase()" +
-                        ") >= 0) {\r\n                bViewed = true;\r\n                break;\r\n            " +
-                        "}\r\n        }\r\n        if (!bViewed) {\r\n            $(this).closest(\"tr\").css(\"fo" +
-                        "nt-weight\", \"bold\");\r\n        }\r\n    }, null);\r\n}\r\n    \r\nfunction onQueryFailed(" +
-                        "sender, args)\r\n{\r\n    alert(\'Request failed\' + args.get_message() + \'\\n\' + arg.g" +
-                        "et_stackTrace());\r\n}\r\n \r\nfunction onQueryUserSucceeded(sender, args) {\r\n    user" +
-                        "Id = web.get_currentUser().get_id();\r\n    //alert(userId);\r\n    var list = web.g" +
-                        "et_lists().getByTitle(\'DocReadStatus\');\r\n    var camlQuery = new SP.CamlQuery();" +
-                        "\r\n    var strCaml = \"<View><ViewFields><FieldRef Name=\'Title\'/></ViewFields>\"\r\n " +
-                        "       + \"<Query><Where><Contains><FieldRef Name=\'ViewPeople\' />\"\r\n        + \"<V" +
-                        "alue Type=\'Text\'>\" + \";\" +userId + \";\" + \"</Value></Contains></Where></Query></V" +
-                        "iew>\";\r\n \r\n    camlQuery.set_viewXml(strCaml);\r\n    collListItem = list.getItems" +
-                        "(camlQuery);\r\n    clientContext.load(collListItem);\r\n    clientContext.executeQu" +
-                        "eryAsync(onQuerySucceeded, onQueryFailed);\r\n}\r\n \r\nfunction onQueryUserFailed(sen" +
-                        "der, args) {\r\n    alert(\'Request failed\' + args.get_message() + \'\\n\' + args.get_" +
-                        "stackTrace());\r\n}\r\n \r\nfunction getWebUserData() {\r\n    clientContext = SP.Client" +
-                        "Context.get_current();\r\n    web = clientContext.get_web();\r\n    user = web.get_c" +
-                        "urrentUser();\r\n    user.retrieve();\r\n    clientContext.load(web);\r\n    clientCon" +
-                        "text.executeQueryAsync(onQueryUserSucceeded, onQueryUserFailed);\r\n}\r\n \r\n$(docume" +
-                        "nt).ready(function () {\r\n    //alert(\'start\');\r\n    ExecuteOrDelayUntilScriptLoa" +
-                        "ded(getWebUserData, \"sp.js\");\r\n});\r\n"));
+                        "ass*=\"ms-vb-title\"]\');\r\n    //to be used to detect if it is a folder\r\n    //var " +
+                        "icons = $(\'tr[class*=\"ms-itmhover\"] td[class*=\"ms-vb-icon\"]\');\r\n    rows.each(fu" +
+                        "nction () {\r\n       if(this.innerHTML.toLowerCase().indexOf(\"handlefolder\") >=0)" +
+                        " {\r\n            return;\r\n        }\r\n\r\n        var bViewed = false;\r\n        for " +
+                        "(var i = 0; i < items.length; i++) {\r\n            var title = items[i];\r\n       " +
+                        "     if (this.innerHTML.toLowerCase().indexOf(title.toLowerCase()) >= 0) {\r\n    " +
+                        "            bViewed = true;\r\n                break;\r\n            }\r\n        }\r\n " +
+                        "       if (!bViewed) {\r\n            $(this).closest(\"tr\").css(\"font-weight\", \"bo" +
+                        "ld\");\r\n        }\r\n    }, null);\r\n}\r\n    \r\nfunction onQueryFailed(sender, args)\r\n" +
+                        "{\r\n    alert(\'Request failed\' + args.get_message() + \'\\n\' + arg.get_stackTrace()" +
+                        ");\r\n}\r\n \r\nfunction onQueryUserSucceeded(sender, args) {\r\n    userId = web.get_cu" +
+                        "rrentUser().get_id();\r\n    //alert(userId);\r\n    var list = web.get_lists().getB" +
+                        "yTitle(\'DocReadStatus\');\r\n    var camlQuery = new SP.CamlQuery();\r\n    var strCa" +
+                        "ml = \"<View><ViewFields><FieldRef Name=\'Title\'/></ViewFields>\"\r\n        + \"<Quer" +
+                        "y><Where><Contains><FieldRef Name=\'ViewPeople\' />\"\r\n        + \"<Value Type=\'Text" +
+                        "\'>\" + \";\" +userId + \";\" + \"</Value></Contains></Where></Query></View>\";\r\n \r\n    " +
+                        "camlQuery.set_viewXml(strCaml);\r\n    collListItem = list.getItems(camlQuery);\r\n " +
+                        "   clientContext.load(collListItem);\r\n    clientContext.executeQueryAsync(onQuer" +
+                        "ySucceeded, onQueryFailed);\r\n}\r\n \r\nfunction onQueryUserFailed(sender, args) {\r\n " +
+                        "   alert(\'Request failed\' + args.get_message() + \'\\n\' + args.get_stackTrace());\r" +
+                        "\n}\r\n \r\nfunction getWebUserData() {\r\n    clientContext = SP.ClientContext.get_cur" +
+                        "rent();\r\n    web = clientContext.get_web();\r\n    user = web.get_currentUser();\r\n" +
+                        "    user.retrieve();\r\n    clientContext.load(web);\r\n    clientContext.executeQue" +
+                        "ryAsync(onQueryUserSucceeded, onQueryUserFailed);\r\n}\r\n \r\n$(document).ready(funct" +
+                        "ion () {\r\n    //alert(\'start\');\r\n    ExecuteOrDelayUntilScriptLoaded(getWebUserD" +
+                        "ata, \"sp.js\");\r\n});\r\n"));
             return @__ctrl;
         }
         

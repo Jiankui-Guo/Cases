@@ -19,6 +19,7 @@ namespace DocumentReadStatus.Features.AuditListWebPart
 
         public override void FeatureActivated(SPFeatureReceiverProperties properties)
         {
+            Logger.WriteVerboseLog("Executing AuditListWebPartEventReceiver|FeatureActivated");
             SPSite site = properties.Feature.Parent as SPSite;
 
             foreach (SPWeb web in site.AllWebs)
@@ -36,9 +37,7 @@ namespace DocumentReadStatus.Features.AuditListWebPart
                 readStatusList.OnQuickLaunch = false;
                 readStatusList.Update();
 
-                Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
-                    "Executing AuditListWebPartEventReceiver FeatureActivated",
-                    string.Format("Creating list for web:{0}", web.Url));
+                Logger.WriteVerboseLog("Executing AuditListWebPartEventReceiver|Creating list for web:{0}", web.Url);
             }
         }
 
@@ -47,6 +46,7 @@ namespace DocumentReadStatus.Features.AuditListWebPart
 
         public override void FeatureDeactivating(SPFeatureReceiverProperties properties)
         {
+            Logger.WriteVerboseLog("Executing AuditListWebPartEventReceiver|FeatureDeactivating");
             SPSite site = properties.Feature.Parent as SPSite;
 
             foreach (SPWeb web in site.AllWebs)
@@ -57,9 +57,7 @@ namespace DocumentReadStatus.Features.AuditListWebPart
                 {
                     web.Lists.Delete(list.ID);
 
-                    Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
-                        "Executing AuditListWebPartEventReceiver FeatureDeactivating",
-                        string.Format("Removing list for web:{0}", web.Url));
+                    Logger.WriteVerboseLog("Executing AuditListWebPartEventReceiver|Deleting list for web:{0}", web.Url);
                 }
             }
                 

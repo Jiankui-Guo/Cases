@@ -18,9 +18,7 @@ namespace DocumentReadStatus.EventReceiver
         {
             base.ItemUpdated(properties);
 
-            Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
-                "Executing ItemUpdated",
-                properties.BeforeUrl);
+            Logger.WriteVerboseLog("Executing DocReadStatusHandler.ItemUpdated|{0}", properties.BeforeUrl);
 
             CleanUpDocReadStatus(properties.SiteId,
                 properties.Web.ID,
@@ -34,9 +32,7 @@ namespace DocumentReadStatus.EventReceiver
         {
             base.ItemDeleted(properties);
 
-            Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
-                "Executing ItemDeleted",
-                properties.BeforeUrl);
+            Logger.WriteVerboseLog("Executing DocReadStatusHandler.ItemDeleted|{0}", properties.BeforeUrl);
 
             CleanUpDocReadStatus(properties.SiteId,
                 properties.Web.ID,
@@ -55,6 +51,7 @@ namespace DocumentReadStatus.EventReceiver
 
                         if (readStatusList == null)
                         {
+                            Logger.WriteVerboseLog("Executing DocReadStatusHandler.CleanUpDocReadStatus|DocReadStatus is null");
                             return;
                         }
 
@@ -77,10 +74,9 @@ namespace DocumentReadStatus.EventReceiver
 
                             foreach (SPListItem item in items)
                             {
-                                readStatusList.Items.DeleteItemById(item.ID);
-                                Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.Verbose,
-                                    "Executing CleanUpDocReadStatus",
-                                    item.Title);
+                                item.Delete();
+                                //readStatusList.Items.DeleteItemById(item.ID);
+                                Logger.WriteVerboseLog("Executing DocReadStatusHandler.CleanUpDocReadStatus|Remove item:{0}", item.Title);
                             }
 
                             web.AllowUnsafeUpdates = false;
