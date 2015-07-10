@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <RequestVersion Version="2" MinorVersion="2" xmlns="http://schemas.microsoft.com/sharepoint/soap/"/>
+    <RequestCollection CorrelationId="{93855DE3-5E13-47F2-A972-1F53B7E0327F}" xmlns="http://schemas.microsoft.com/sharepoint/soap/">
+      <Request Url="http://jiangumac/Jie/OWA.docx" UserAgent="{1984108C-4B93-4EEB-B320-919432D6E593}" UserAgentClient="msword" UserAgentPlatform="win" Build="15.0.4569.1503" MetaData="1031" RequestToken="1">
+        <SubRequest Type="Cell" SubRequestToken="1">
+          <SubRequestData PartitionID="7808f4dd-2385-49d6-b7ce-37aca5e43602" BinaryDataSize="335">DQALAJzPKfM5lAabBgIAAO4CAACqAiAAjBCEGZNL606zIJGUMtblk1oEFgANbXN3b3JkB3dpbnoCCACVHX0XdwEWAgYAAwUAigICAADaAgYAAwAAygIIAAgAgAOEACYCIAATHwkQgsj7QJiGZTP5NMIdbAFwWQwcuPLQK0r+TVOn9MDyqn7BNTEAEFAFZRBVAIgCVv9hZVYoXQJQAFAAUAAAcLkMWcPYYK6I7UOVZMRDNVJSnZUxADtQMYDAgGKDTF03gcRwA1NNXjWAwFADUwxcMHzcXFNTTV4zc5WFQoONXGJ90FxGU05bYnTVaNNyzWg2gohVU2ZYaTdzmVEAALUTASYCIAAO6XY6MoAMTbnd88ZQKUM+TAEgJgwcuPLQK0r+TVOn9MDyqn7BAwAgJgyZIgShWw0pQpGd0oV6Kr7gAAClEwFBCwGsAgBVAwE=</SubRequestData>
+        </SubRequest>
+        <SubRequest Type="Cell" SubRequestToken="2">
+          <SubRequestData GetFileProps="true" BinaryDataSize="487">DQALAJzPKfM5lAabBgIAAO4CAACqAiAAjBCEGZNL606zIJGUMtblk1oEFgANbXN3b3JkB3dpbnoCCACVHX0XdwEWAgYAAwUAigICAADaAgYAAwAAygIIAAgAgAOEACYCIAD2NXoyYQcURJaGUekAZnpNpAB4JkXlmeusspVAgXcXy075n0UAbgJ4JroaZhRTTWq/fojoNLEGYLoAbgJREwEmAiAAEx8JEILI+0CYhmUz+TTCHWwBcDEM/bRH4JLv30GcHS5mxk5XpQ0xAABQAABwWQwcuPLQK0r+TVOn9MDyqn7BNTEAEFAFZRBVAFiqYfJhZVYoXQJQAFAAUAAAcEUMgA/AFynf7wEJsthQItZmfCExAAhQBVQCYPqCHVAAUAAAcLkMWcPYYK6I7UOVZMRDNVJSnZUxADtQM4HYgGKDTF03gcRwA1NNXjWAwFADUwxcMHzcXFNTTV4zc5WFQoONXGJ90FxGU05bYnTVaNNyzWg2gohVU2ZYaTdzmVEAALUTASYCIAAO6XY6MoAMTbnd88ZQKUM+TAEgJgwcuPLQK0r+TVOn9MDyqn7BAwAgKAwxbKuM1Li3s0Kpk51OFRgw8gQAICgUMWyrjNS4t7NCqZOdThUYMPIEAKUTAUELAawCAFUDAQ==</SubRequestData>
+        </SubRequest>
+        <SubRequest Type="Cell" SubRequestToken="3">
+          <SubRequestData PartitionID="383adc0b-e66e-4438-95e6-e39ef9720122" BinaryDataSize="314">DQALAJzPKfM5lAabBgIAAO4CAACqAiAAjBCEGZNL606zIJGUMtblk1oEFgANbXN3b3JkB3dpbnoCCACVHX0XdwEWAgYAAwUAigICAADaAgYAAwAAygIIAAgAgAOEACYCIAATHwkQgsj7QJiGZTP5NMIdbAFwWQwcuPLQK0r+TVOn9MDyqn7BNTEAEFAFZRBVAGhlcVpiZVYoXQJQAFAAUAAAcLkMWcPYYK6I7UOVZMRDNVJSnZUxADtQMYDAgGKDTF03gcRwA1NNXjWAwFADUwxcMHzcXFNTTV4zc5WFQoONXGJ90FxGU05bYnTVaNNyzWg2gohVU2ZYaTdzmVEAALUTASYCIAAO6XY6MoAMTbnd88ZQKUM+TAEgJgwcuPLQK0r+TVOn9MDyqn7BAwClEwFBCwGsAgBVAwE=</SubRequestData>
+        </SubRequest>
+        <SubRequest Type="ServerTime" SubRequestToken="4"/>
+        <SubRequest Type="GetVersions" SubRequestToken="5"/>
+      </Request>
+    </RequestCollection>
+  </s:Body>
+</s:Envelope>

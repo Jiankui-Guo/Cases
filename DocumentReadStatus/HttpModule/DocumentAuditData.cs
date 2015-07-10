@@ -24,11 +24,16 @@ namespace DocumentReadStatus.HttpModule
 
         private void WriteDocStatus(object sender, EventArgs e)
         {
+            //TODO: use callstorage.svc to open document
+            //TODO: skip processing when the url is asmx or svc and all others which are not documents
             try
             {
                 Logger.WriteVerboseLog("Executing WriteDocStatus|RawUrl:{0}", HttpContext.Current.Request.RawUrl);
 
                 string itemURL = HttpUtility.UrlDecode(HttpContext.Current.Request.RawUrl);
+
+                if (itemURL.Contains("/_vti_bin/owssvr.dll"))
+                    return;
 
                 //OWA: http://jg-pc-wfe01/_layouts/15/WopiFrame.aspx?sourcedoc=/Shared%20Documents/OWA.docx&action=default
                 if (itemURL.Contains("WopiFrame.aspx"))
@@ -169,10 +174,12 @@ namespace DocumentReadStatus.HttpModule
                                 //ITEM COUNT SHOULD BE EQUEAL TO 1
                                 else
                                 {
-                                    string peopleIds = items[0]["ViewPeople"].ToString() + ";";
+                                    //http://blogit.create.pt/miguelisidoro/2008/06/07/sharepoint-2007-value-does-not-fall-within-the-expected-range-when-updating-an-splistitem-in-a-search/
+                                    SPListItem item = items[0].ParentList.GetItemById(items[0].ID);
+                                    string peopleIds = item["ViewPeople"].ToString() + ";";
                                     if (!peopleIds.Contains(";" + userId + ";"))
-                                        items[0]["ViewPeople"] = peopleIds + userId + ";";
-                                    items[0].Update();
+                                        item["ViewPeople"] = peopleIds + userId + ";";
+                                    item.Update();
 
                                     Logger.WriteVerboseLog("Executing WriteDocStatus|update status into list: Title:{0}\tViewPeople:{1}", itemURL, userId);
                                 }

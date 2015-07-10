@@ -24,6 +24,13 @@ namespace DocumentReadStatus.Features.AuditListWebPart
 
             foreach (SPWeb web in site.AllWebs)
             {
+                SPList temp = web.Lists.TryGetList("DocReadStatus");
+                if (temp != null)
+                {
+                    temp.Delete();
+                    Logger.WriteVerboseLog("Executing AuditListWebPartEventReceiver|Deleting existing list for web:{0}", web.Url);
+                }
+
                 Guid readStatusListId = web.Lists.Add("DocReadStatus", "", SPListTemplateType.GenericList);
                 SPList readStatusList = web.Lists[readStatusListId];
                 readStatusList.Fields.Add("ViewPeople", SPFieldType.Text, false);
@@ -38,6 +45,7 @@ namespace DocumentReadStatus.Features.AuditListWebPart
                 readStatusList.Update();
 
                 Logger.WriteVerboseLog("Executing AuditListWebPartEventReceiver|Creating list for web:{0}", web.Url);
+
             }
         }
 

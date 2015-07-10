@@ -2,3 +2,4 @@ C:\Users\farmadmin\Documents\GitHub\Cases\DocumentReadStatus\bin\Debug\DocumentR
 C:\Users\farmadmin\Documents\GitHub\Cases\DocumentReadStatus\bin\Debug\DocumentReadStatus.pdb
 C:\Users\farmadmin\Documents\GitHub\Cases\DocumentReadStatus\obj\Debug\DocumentReadStatus.dll
 C:\Users\farmadmin\Documents\GitHub\Cases\DocumentReadStatus\obj\Debug\DocumentReadStatus.pdb
+C:\Users\farmadmin\Documents\GitHub\Cases\DocumentReadStatus\obj\Debug\DocumentReadStatus.csprojResolveAssemblyReference.cache
