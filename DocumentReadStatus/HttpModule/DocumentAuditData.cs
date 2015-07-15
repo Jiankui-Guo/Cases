@@ -28,12 +28,17 @@ namespace DocumentReadStatus.HttpModule
             //TODO: skip processing when the url is asmx or svc and all others which are not documents
             try
             {
-                Logger.WriteVerboseLog("Executing WriteDocStatus|RawUrl:{0}", HttpContext.Current.Request.RawUrl);
+                LoggingService.LogInfo("Enter  WriteDocStatus function::PreRequestHandlerExecute");
+                LoggingService.LogInfo("Raw Url:{0}", HttpContext.Current.Request.RawUrl);
+                //Logger.WriteVerboseLog("Executing WriteDocStatus|RawUrl:{0}", HttpContext.Current.Request.RawUrl);
 
                 string itemURL = HttpUtility.UrlDecode(HttpContext.Current.Request.RawUrl);
 
                 if (itemURL.Contains("/_vti_bin/owssvr.dll"))
+                {
+                    LoggingService.LogInfo("Ignore /_vti_bin/owssvr.dll.");
                     return;
+                }
 
                 //OWA: http://jg-pc-wfe01/_layouts/15/WopiFrame.aspx?sourcedoc=/Shared%20Documents/OWA.docx&action=default
                 if (itemURL.Contains("WopiFrame.aspx"))
@@ -41,17 +46,17 @@ namespace DocumentReadStatus.HttpModule
                     itemURL = HttpUtility.UrlDecode(HttpContext.Current.Request.QueryString["sourcedoc"]);
                 }
 
-                Logger.WriteVerboseLog("Executing WriteDocStatus|ItemUrl:{0}", itemURL);
+                LoggingService.LogInfo("Decoded Item Url:{0}", itemURL);
 
                 Guid listId = Guid.Empty;
                 Guid itemId = Guid.Empty;
 
                 if (SPContext.Current.Web == null)
                 {
-                    Logger.WriteVerboseLog("Executing WriteDocStatus|SPContext.Current.Web == Null");
+                    LoggingService.LogInfo("Return:SPContext.Current.Web == Null");
                     return;
                 }
-
+                
                 DataTable result = new DataTable();
 
                 SPSecurity.RunWithElevatedPrivileges(() =>
@@ -66,16 +71,17 @@ namespace DocumentReadStatus.HttpModule
                             conn.Open();
                             SqlDataAdapter sqlAdapter = new SqlDataAdapter(comm);
                             sqlAdapter.Fill(result);
-                            Logger.WriteVerboseLog("Executing WriteDocStatus|Executing SQL:{0}", cmdString);
+                            LoggingService.LogInfo("Executed SQL:{0}", cmdString);
                         }
                     }
                 });
 
-                Logger.WriteVerboseLog("Executing WriteDocStatus|Sql Result Cout:{0}", result.Rows.Count);
+                LoggingService.LogInfo("Sql Result Count:{0}", result.Rows.Count);
 
                 if (result.Rows.Count == 0)
                 {
                     result = null;
+                    LoggingService.LogInfo("Return: Sql Result Count: 0");
                     return;
                 }
 
@@ -97,19 +103,23 @@ namespace DocumentReadStatus.HttpModule
                     }
                 }
 
-                Logger.WriteVerboseLog("Executing WriteDocStatus|ListId:{0}\tItemId:{1}", listId, itemId);
+                LoggingService.LogInfo("Found Item's List Id:{0}\tItem Id:{1}", listId, itemId);
 
                 //For application pages such as /_layouts/15/addanapp.aspx
                 if (listId == Guid.Empty || itemId == Guid.Empty)
+                {
+                    LoggingService.LogInfo("Return:ListId or ItemId is empty.");
                     return;
+                }
 
                 SPList list = SPContext.Current.Web.Lists.GetList(listId, true);
                 SPListItem doc = null;
 
-                Logger.WriteVerboseLog("Executing WriteDocStatus|Get List:{0}, BaseType:{1}", list.Title, list.BaseType);
+                LoggingService.LogInfo("Get List:{0}, BaseType:{1}", list.Title, list.BaseType);
 
                 if (list.BaseType != SPBaseType.DocumentLibrary)
                 {
+                    LoggingService.LogInfo("Return:List is NOT Document Library.");
                     return;
                 }
 
@@ -117,12 +127,13 @@ namespace DocumentReadStatus.HttpModule
                 {
                     doc = list.GetItemByUniqueId(itemId);
                 }
-                catch
+                catch(Exception ex)
                 {
                     //Ingore allitems.aspx and so on
+                    LoggingService.LogInfo("Return: Doc is null:{0}", ex.ToString());
                 }
 
-                Logger.WriteVerboseLog("Executing WriteDocStatus|Get Document:{0}", doc == null ? "null" : doc.Title);
+                LoggingService.LogInfo("Get Document:{0}", doc == null ? "null" : doc.Url);
 
                 if (doc != null)
                 {
@@ -140,7 +151,7 @@ namespace DocumentReadStatus.HttpModule
 
                                 if (readStatusList == null)
                                 {
-                                    Logger.WriteVerboseLog("Executing WriteDocStatus|Get List DocReadStatus:null");
+                                    LoggingService.LogInfo("Error:Get List DocReadStatus");
                                     return;
                                 }
 
@@ -156,7 +167,7 @@ namespace DocumentReadStatus.HttpModule
 
                                 SPListItemCollection items = readStatusList.GetItems(query);
 
-                                Logger.WriteVerboseLog("Executing WriteDocStatus|Get List items from status list: Count:{0}", items.Count);
+                                LoggingService.LogInfo("Get status from status list: Count:{0}", items.Count);
 
                                 site.AllowUnsafeUpdates = true;
                                 web.AllowUnsafeUpdates = true;
@@ -164,44 +175,38 @@ namespace DocumentReadStatus.HttpModule
                                 string userId = SPContext.Current.Web.CurrentUser.ID.ToString();
                                 if (items.Count == 0)
                                 {
+                                    LoggingService.LogInfo("Inserting status into list: Title:{0}\tViewPeople:{1}", itemURL, userId);
+
                                     SPListItem item = readStatusList.AddItem();
                                     item["Title"] = itemURL;
                                     item["ViewPeople"] = ";" + userId + ";";
                                     item.Update();
-
-                                    Logger.WriteVerboseLog("Executing WriteDocStatus|Insert status into list: Title:{0}\tViewPeople:{1}", itemURL, userId);
                                 }
                                 //ITEM COUNT SHOULD BE EQUEAL TO 1
                                 else
                                 {
+                                    LoggingService.LogInfo("Updating status into list: Title:{0}\tViewPeople:{1}", itemURL, userId);
                                     //http://blogit.create.pt/miguelisidoro/2008/06/07/sharepoint-2007-value-does-not-fall-within-the-expected-range-when-updating-an-splistitem-in-a-search/
                                     SPListItem item = items[0].ParentList.GetItemById(items[0].ID);
                                     string peopleIds = item["ViewPeople"].ToString() + ";";
                                     if (!peopleIds.Contains(";" + userId + ";"))
                                         item["ViewPeople"] = peopleIds + userId + ";";
                                     item.Update();
-
-                                    Logger.WriteVerboseLog("Executing WriteDocStatus|update status into list: Title:{0}\tViewPeople:{1}", itemURL, userId);
                                 }
 
                                 web.AllowUnsafeUpdates = false;
                                 site.AllowUnsafeUpdates = false;
                             }
                         }
-
                     });
-
                 }
 
                 result = null;
             }
             catch(Exception ex)
             {
-                Logger.WriteLog(Microsoft.SharePoint.Administration.TraceSeverity.High,
-                    ex.Message,
-                    ex.StackTrace);
+                LoggingService.LogError(ex.Message, ex.StackTrace);
             }
         }
-
     }
 }

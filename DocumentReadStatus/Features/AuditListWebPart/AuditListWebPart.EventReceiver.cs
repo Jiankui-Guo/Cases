@@ -36,9 +36,9 @@ namespace DocumentReadStatus.Features.AuditListWebPart
                 readStatusList.Fields.Add("ViewPeople", SPFieldType.Text, false);
                 readStatusList.Update();
 
-                SPView allItemsView = readStatusList.Views["All Items"];
-                if (!allItemsView.ViewFields.Exists("ViewPeople"))
-                    allItemsView.ViewFields.Add("ViewPeople");
+                //SPView allItemsView = readStatusList.Views["All Items"];
+                //if (!allItemsView.ViewFields.Exists("ViewPeople"))
+                //    allItemsView.ViewFields.Add("ViewPeople");
 
                 readStatusList.Hidden = true;
                 readStatusList.OnQuickLaunch = false;
